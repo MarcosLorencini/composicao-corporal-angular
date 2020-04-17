@@ -1,0 +1,34 @@
+<h1 style="text-align: center; margin-top: 50px; margin-bottom: 30px;">Criar Aluno</h1>
+<div class="row">
+  <div class="col-sm-4"></div>
+  <div class="col-sm-4" >
+    <div [hidden]="sucessSubmitted" style="width: 400px;">
+      <form [formGroup]="alunosaveform" (ngSubmit)="saveAluno(saveAluno)">
+        <div class="form-group">
+          <label>Nome</label>
+          <input type="text" formControlName="aluno_nome" class="form-control" 
+            [ngClass]="{ 'is-invalid': submitted && f.aluno_nome.errors }" data-toggle="tooltip"  
+            data-placement="right" title="Entre como o nome do Aluno" />
+            <div *ngIf="submitted && f.aluno_nome.errors" class="alert alert-danger">
+              <span *ngIf="f.aluno_nome.errors.required">Preencha o nome do aluno</span>
+              <span *ngIf = "f.aluno_nome.errors.minlength">Minímo 4 caracteres</span>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-success">Salvar</button>
+      </form>
+  </div>
+  </div>
+  <div class="col-sm-4"></div>
+</div>
+<div class="row">
+  <div class="col-sm-4"></div>
+  <div class="col-sm-4">
+      <div [hidden]="!sucessSubmitted">
+         <h4>Aluno Add com sucesso!</h4>
+         <button (click)="addAlunoForm()" class='btn btn-primary'>Add mais Alunos</button>
+      </div>      
+  </div>
+  <div class="col-sm-4"></div>
+</div>
+
+

@@ -1,0 +1,74 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h1 style="text-align: center">Alunos</h1><br>
+    <div class="row" [hidden]="!deleteMessage">
+      <div class="col-sm-4"></div>
+      <div class="col-sm-4">
+          <div class="alert alert-info alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Aluno Excluído!</strong>
+          </div>
+      </div>
+      <div class="col-sm-4"></div>
+    </div>           
+  </div>
+  <div class="panel-body">
+      <table  class="table table-hover table-sm" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"  >
+          <thead class="thead-light">
+              <tr>
+                  <th>Aluno</th>
+                  <th>Ação</th>
+              </tr>
+          </thead>
+          <tbody>
+               <tr *ngFor="let aluno of alunos">
+                  <td>{{aluno.aluno_nome}}</td>
+                  <td>
+                    <button (click)="deleteAluno(aluno.aluno_id)" class='btn btn-primary'><i class="fa fa-futboll-0">Delete</i></button>&nbsp;
+                    <button (click)="updateAluno(aluno.aluno_id)" class='btn btn-info' data-toggle="modal" data-target="#myModal">Update</button>&nbsp;
+                    <button (click)="gotToAddNoteByService(aluno)" class='btn btn-secondary'>Lista de composicões</button>&nbsp;
+                    <button (click)="gerarGrafico(aluno)" class='btn btn-dark'>Gerar Gráfico</button>
+                  </td>
+                </tr> 
+          </tbody><br>
+      </table>
+  </div>
+</div> 
+
+<div class="modal" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form [formGroup]="alunoupdateform"  (ngSubmit)="updateAlu(updalu)">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title" style="text-align: center">Atualizar Aluno</h4>
+        </div>
+      
+        <!-- Modal body -->
+        <div class="modal-body" *ngFor="let aluno of alunolist" >
+            <div [hidden]="isupdated">
+              <div class="form-group">
+                <label for="name">Aluno</label>
+                        <input type="hidden" class="form-control"  formControlName="aluno_id" [(ngModel)]="aluno.aluno_id">
+                        <input type="text" class="form-control"  formControlName="aluno_nome" [(ngModel)]="aluno.aluno_nome"
+                        [ngClass]="{ 'is-invalid': submitted && f.aluno_nome.errors }" data-toggle="tooltip"  
+                        data-placement="right" title="Entre como o nome do Aluno"  >
+                        <div *ngIf="submitted && f.aluno_nome.errors" class="alert alert-danger">
+                          <span *ngIf="f.aluno_nome.errors.required">Preencha o nome do aluno</span>
+                          <span *ngIf = "f.aluno_nome.errors.minlength">Minímo 4 caracteres</span>
+                        </div>
+                      </div>
+              </div>  
+              <div [hidden]="!isupdated">
+                  <h4>Aluno Atualizado!</h4>
+              </div>        
+        </div>
+        <!-- Modal footer -->
+        <div class="modal-footer" >
+          <button type="submit" class="btn btn-success" [hidden]="isupdated">Atualizar</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="changeisUpdate()">Fechar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
