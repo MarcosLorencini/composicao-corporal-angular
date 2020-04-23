@@ -7,6 +7,7 @@ import { DataService } from 'src/app/aluno-list/data.service';
 import { AlunoService } from 'src/app/aluno.service';
 import { Observable,Subject } from "rxjs";
 import { Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-add-composicao-component',
@@ -16,16 +17,77 @@ import { Router } from '@angular/router';
 })
 export class AddComposicaoComponent implements OnInit {
 
-  values = '';
-
-  onKey(event: any) {
-    if(event.target.value.lenght > 2 && event.target.value.lenght > 3 ){
-      this.values += event.target.value + ' , ';
-
-    }
-     // without type info
-    console.log(this.values);
+  inputPeso: any;
+  inputImc: any;
+  inputGordura: any;
+  inputViceral: any;
+  inputMusculo: any;
+  inputCalorias: any;
+  inputIdade: any;
+  inputData: any;
+  
+  onKeyPeso(event: any) {
+    this.inputPeso = this.inputPeso.replace(/\D/g,'')
+    this.inputPeso = this.inputPeso.replace(/(\d{1})(\d{1,2})$/, "$1.$2")
+    this.inputPeso = this.inputPeso.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
+    this.inputPeso = this.inputPeso.replace(/^(\d)/g,"$1")
   }
+
+  onKeyImc(event: any) {
+    if (event.keyCode == 9) {
+      return false;
+    }
+    this.inputImc = this.inputImc.replace(/\D/g,'')
+    this.inputImc = this.inputImc.replace(/(\d{1})(\d{1,2})$/, "$1.$2")
+    this.inputImc = this.inputImc.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
+    this.inputImc = this.inputImc.replace(/^(\d)/g,"$1")
+  }
+
+  onKeyGordura(event: any) {
+    if (event.keyCode == 9) {
+      return false;
+    }
+    this.inputGordura = this.inputGordura.replace(/\D/g,'')
+    this.inputGordura = this.inputGordura.replace(/(\d{1})(\d{1,2})$/, "$1.$2")
+    this.inputGordura = this.inputGordura.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
+    this.inputGordura = this.inputGordura.replace(/^(\d)/g,"$1")
+  }
+
+  onKeyViceral(event: any) {
+    if (event.keyCode == 9) {
+      return false;
+    }
+    this.inputViceral = this.inputViceral.replace(/\D/g,'')
+    this.inputViceral = this.inputViceral.replace(/(\d{1})(\d{1,2})$/, "$1.$2")
+    this.inputViceral = this.inputViceral.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
+    this.inputViceral = this.inputViceral.replace(/^(\d)/g,"$1")
+  }
+
+  onKeyMusculo(event: any) {
+    if (event.keyCode == 9) {
+      return false;
+    }
+    this.inputMusculo = this.inputMusculo.replace(/\D/g,'')
+    this.inputMusculo = this.inputMusculo.replace(/(\d{1})(\d{1,2})$/, "$1.$2")
+    this.inputMusculo = this.inputMusculo.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
+    this.inputMusculo = this.inputMusculo.replace(/^(\d)/g,"$1")
+  }
+
+  onKeyCalorias(event: any) {
+    if (event.keyCode == 9) {
+      return false;
+    }
+   this.inputCalorias = this.inputCalorias.replace(/\D/g,'')
+   this.inputCalorias = this.inputCalorias.replace(/^(\d)/g,"$1")
+  }
+
+  onKeyIdade(event: any) {
+    if (event.keyCode == 9) {
+      return false;
+    }
+    this.inputIdade = this.inputIdade.replace(/\D/g,'')
+    this.inputIdade = this.inputIdade.replace(/^(\d)/g,"$1")
+   }
 
   constructor(private composicoesservice: ComposicoesService, private router: Router, private dataService: DataService) { }
 
@@ -44,15 +106,7 @@ export class AddComposicaoComponent implements OnInit {
     this.submitted=false;
     this.alunos = this.dataService.getAluno();
     this.id_aluno = this.alunos.aluno_id
-   
-    
-    //  this.composicoesservice.getComposicaoPorAluno(this.id_aluno)
-    //   .subscribe(
-    //     data => {
-    //       this.composicoes=data           
-    //     },
-    //     error => console.log(error));
-    
+      
   }
 
   composicoessaveform=new FormGroup({
@@ -66,28 +120,33 @@ export class AddComposicaoComponent implements OnInit {
     dataMedida:new FormControl()
   });
 
-  // composicoesupdateform=new FormGroup({
-  //   composicao_id:new FormControl(),
-  //   peso:new FormControl() ,
-  //   imc:new FormControl(),
-  //   gordura:new FormControl(),
-  //   viceral:new FormControl(),
-  //   musculo:new FormControl(),
-  //   calorias:new FormControl(),
-  //   idade:new FormControl()
-  // });
-
- 
   saveComposicao(saveComposicao){
     this.composicao=new Composicao();   
-    this.composicao.peso=this.Peso.value;
-    this.composicao.imc=this.IMC.value;
-    this.composicao.gordura=this.Gordura.value;
-    this.composicao.viceral=this.Viceral.value;
-    this.composicao.musculo=this.Musculo.value;
-    this.composicao.calorias=this.Calorias.value;
-    this.composicao.idade=this.Idade.value;
-    this.composicao.dataMedida=this.DataMedida.value;
+    let pesoNumber: number = parseFloat(this.Peso.value);
+    this.composicao.peso=pesoNumber;
+
+    let imcNumber: number = parseFloat(this.IMC.value);
+    this.composicao.imc = imcNumber;
+
+    let gorduraNumber: number = parseFloat(this.Gordura.value);
+    this.composicao.gordura = gorduraNumber;
+
+    let viceraNumber: number = parseFloat(this.Viceral.value);
+    this.composicao.viceral = viceraNumber;
+
+    let musculoNumber: number = parseFloat(this.Musculo.value);
+    this.composicao.musculo = musculoNumber;
+
+    let caloriasNumber: number = parseFloat(this.Calorias.value);
+    this.composicao.calorias = caloriasNumber;
+
+    let idadeNumber: number = parseFloat(this.Idade.value);
+    this.composicao.idade = idadeNumber;
+
+
+    this.composicao.dataMedida= new DatePipe('en-US').transform(this.DataMedida.value, 'dd/MM/yyyy');
+    
+    console.log(this.composicao.dataMedida);
     this.submitted = true;
     this.save();
   }
@@ -105,39 +164,13 @@ export class AddComposicaoComponent implements OnInit {
         },
         error => console.log(error));
     this.composicao = new Composicao();
-    // this.composicoesservice.createComposicao(this.id_aluno, this.composicao)
-    //   .subscribe(
-    //     data => console.log(data), error => console.log(error));
-    // this.composicao = new Composicao();
+   
   }
 
   gotToListComposicao(){
-    //this.dataService.setAluno(this.alunos);
     this.router.navigate(['/list-composicao'])
       
   }
-
-  // updateComp(updcomp){
-  //   this.composicao=new Composicao(); 
-  //   this.composicao.composicao_id=this.ComposicaoIdUpdate.value;
-  //   this.composicao.peso=this.PesoUpdate.value;
-  //   this.composicao.imc=this.IMCUpdate.value;
-  //   this.composicao.gordura=this.GorduraUpdate.value;
-  //   this.composicao.viceral=this.ViceralUpdate.value;
-  //   this.composicao.musculo=this.MusculoUpdate.value;
-  //   this.composicao.calorias=this.CaloriasUpdate.value;
-  //   this.composicao.idade=this.IdadeUpdate.value;
-    
-  //  this.composicoesservice.updateComposicao(this.composicao.composicao_id, this.composicao)
-  //  .subscribe(
-  //   data => {     
-  //     this.isupdatedcomposicao=true;
-  //     this.composicoesservice.getComposicaoList().subscribe(data =>{
-  //       this.composicoes =data
-  //       })
-  //   },
-  //   error => console.log(error));
-  // }
 
   deleteComposicao(id: number) {
     this.composicoesservice.deleteComposicao(id)
@@ -151,15 +184,6 @@ export class AddComposicaoComponent implements OnInit {
         },
         error => console.log(error));
   }
-
-  // updateComposicao(id: number){
-  //   this.composicoesservice.getComposicao(id)
-  //     .subscribe(
-  //       data => {
-  //         this.composicoesList=data           
-  //       },
-  //       error => console.log(error));
-  // }
 
   get ComposicaoId(){
     return this.composicoessaveform.get('composicao_id');
@@ -207,39 +231,5 @@ export class AddComposicaoComponent implements OnInit {
   changeisUpdate(){
   this.isupdatedcomposicao=false;
   }
-
-  // get ComposicaoIdUpdate(){
-  //   return this.composicoesupdateform.get('composicao_id');
-  // }
-
-  // get PesoUpdate(){
-  //   return this.composicoesupdateform.get('peso');
-  // }
-
-  // get IMCUpdate(){
-  //   return this.composicoesupdateform.get('imc');
-  // }
-
-  // get GorduraUpdate(){
-  //   return this.composicoesupdateform.get('gordura');
-  // }
-
-  // get ViceralUpdate(){
-  //   return this.composicoesupdateform.get('viceral');
-  // }
-
-  // get MusculoUpdate(){
-  //   return this.composicoesupdateform.get('musculo');
-  // }
-
-  // get CaloriasUpdate(){
-  //   return this.composicoesupdateform.get('calorias');
-  // }
-
-  // get IdadeUpdate(){
-  //   return this.composicoesupdateform.get('idade');
-  // }
-
-  
 
 }

@@ -14,7 +14,7 @@
       <div class="col-4">
         <div class="form-group col-sm-3">
             <label for="name">Peso</label>
-            <input type="text" class="form-control" (keyup)="onKey($event)" formControlName="peso" data-toggle="tooltip"
+            <input type="text" class="form-control" maxlength="6" (keyup)="onKeyPeso($event)" [(ngModel)]='inputPeso' formControlName="peso" data-toggle="tooltip"
             data-placement="right" title="Entre com o Peso" >
               <div class="alert alert-danger" *ngIf = "(Peso.touched) && (Peso.invalid)" style="margin-top: 5px;">
                 <span *ngIf="Peso.errors.required">Peso é obrigatório</span>
@@ -26,7 +26,7 @@
 
         <div class="form-group col-sm-3">
           <label for="name">Imc</label>
-          <input type="text" class="form-control"  formControlName="imc" data-toggle="tooltip"
+          <input type="text" class="form-control" maxlength="5" (keyup)="onKeyImc($event)" [(ngModel)]='inputImc'  formControlName="imc" data-toggle="tooltip"
           data-placement="right" title="Entre com o Imc" >
             <div class="alert alert-danger" *ngIf = "(IMC.touched) && (IMC.invalid)" style="margin-top: 5px;">
               <span *ngIf="IMC.errors.required">Imc é obrigatório</span>
@@ -36,7 +36,7 @@
 
         <div class="form-group col-sm-3">
           <label for="name">Gordura</label>
-          <input type="text" class="form-control"  formControlName="gordura" data-toggle="tooltip"
+          <input type="text" class="form-control" maxlength="5" (keyup)="onKeyGordura($event)" [(ngModel)]='inputGordura'  formControlName="gordura" data-toggle="tooltip"
           data-placement="right" title="Entre com a Gordura" >
             <div class="alert alert-danger" *ngIf = "(Gordura.touched) && (Gordura.invalid)" style="margin-top: 5px;">
               <span *ngIf="Gordura.errors.required">Gordura é obrigatório</span>
@@ -46,7 +46,7 @@
 
         <div class="form-group col-sm-3">
           <label for="name">Viceral</label>
-          <input type="text" class="form-control"  formControlName="viceral" data-toggle="tooltip"
+          <input type="text" class="form-control" maxlength="5" (keyup)="onKeyViceral($event)" [(ngModel)]='inputViceral'  formControlName="viceral" data-toggle="tooltip"
           data-placement="right" title="Entre com a Viceral" >
             <div class="alert alert-danger" *ngIf = "(Viceral.touched) && (Viceral.invalid)" style="margin-top: 5px;">
               <span *ngIf="Viceral.errors.required">Viceral é obrigatório</span>
@@ -57,7 +57,7 @@
       <div class="col-4">
         <div class="form-group col-sm-3">
           <label for="name">Musculo</label>
-          <input type="text" class="form-control"  formControlName="musculo" data-toggle="tooltip"
+          <input type="text" class="form-control"  maxlength="5" (keyup)="onKeyMusculo($event)" [(ngModel)]='inputMusculo'  formControlName="musculo" data-toggle="tooltip"
           data-placement="right" title="Entre com o Musculo" >
             <div class="alert alert-danger" *ngIf = "(Musculo.touched) && (Musculo.invalid)" style="margin-top: 5px;">
               <span *ngIf="Musculo.errors.required">Musculo é obrigatório</span>
@@ -67,7 +67,7 @@
 
         <div class="form-group col-sm-3">
           <label for="name">Calorias</label>
-          <input type="text" class="form-control"  formControlName="calorias" data-toggle="tooltip"
+          <input type="text" class="form-control" maxlength="4" (keyup)="onKeyCalorias($event)" [(ngModel)]='inputCalorias'  formControlName="calorias" data-toggle="tooltip"
           data-placement="right" title="Entre com o Calorias" >
             <div class="alert alert-danger" *ngIf = "(Calorias.touched) && (Calorias.invalid)" style="margin-top: 5px;">
               <span *ngIf="Calorias.errors.required">Calorias é obrigatório</span>
@@ -77,7 +77,7 @@
 
         <div class="form-group col-sm-3">
           <label for="name">Idade</label>
-          <input type="text" class="form-control"  formControlName="idade" data-toggle="tooltip"
+          <input type="text" class="form-control" maxlength="2" (keyup)="onKeyIdade($event)" [(ngModel)]='inputIdade'  formControlName="idade" data-toggle="tooltip"
           data-placement="right" title="Entre com o Idade" >
             <div class="alert alert-danger" *ngIf = "(Idade.touched) && (Idade.invalid)" style="margin-top: 5px;">
               <span *ngIf="Idade.errors.required">Idade é obrigatório</span>
