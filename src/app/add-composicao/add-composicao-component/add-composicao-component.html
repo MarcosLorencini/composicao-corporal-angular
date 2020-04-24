@@ -1,7 +1,7 @@
 
 
-<div [hidden]="submitted">
-  <form [formGroup]="composicoessaveform" #savecomposicao (ngSubmit)="saveComposicao(saveComposicao)">
+<div [hidden]="sucessSubmitted">
+  <form [formGroup]="composicoessaveform" (ngSubmit)="saveComposicao(saveComposicao)">
     
     <div >
       <h1 style="text-align: center">Add Composicões</h1>
@@ -14,85 +14,84 @@
       <div class="col-4">
         <div class="form-group col-sm-3">
             <label for="name">Peso</label>
-            <input type="text" class="form-control" maxlength="6" (keyup)="onKeyPeso($event)" [(ngModel)]='inputPeso' formControlName="peso" data-toggle="tooltip"
-            data-placement="right" title="Entre com o Peso" >
-              <div class="alert alert-danger" *ngIf = "(Peso.touched) && (Peso.invalid)" style="margin-top: 5px;">
-                <span *ngIf="Peso.errors.required">Peso é obrigatório</span>
-                  <span *ngIf = "Peso.errors.minlength">MinLength Error</span>                   
-              </div>
+            <input type="text" class="form-control" maxlength="6" (keyup)="onKeyPeso($event)" 
+            [(ngModel)]='inputPeso' formControlName="peso" data-toggle="tooltip" data-placement="right"
+            [ngClass]="{ 'is-invalid': submitted && f.peso.errors }" title="Entre com o Peso" >
+            <div *ngIf="submitted && f.peso.errors" class="invalid-feedback">
+              <span *ngIf="f.peso.errors.required">Preencha o peso do aluno</span>
+            </div>
         </div>
 
 
 
         <div class="form-group col-sm-3">
           <label for="name">Imc</label>
-          <input type="text" class="form-control" maxlength="5" (keyup)="onKeyImc($event)" [(ngModel)]='inputImc'  formControlName="imc" data-toggle="tooltip"
-          data-placement="right" title="Entre com o Imc" >
-            <div class="alert alert-danger" *ngIf = "(IMC.touched) && (IMC.invalid)" style="margin-top: 5px;">
-              <span *ngIf="IMC.errors.required">Imc é obrigatório</span>
-                <span *ngIf = "IMC.errors.minlength">MinLength Error</span>                   
-            </div>
+          <input type="text" class="form-control" maxlength="5" (keyup)="onKeyImc($event)" 
+          [(ngModel)]='inputImc'  formControlName="imc" data-toggle="tooltip" data-placement="right" 
+          [ngClass]="{ 'is-invalid': submitted && f.imc.errors }" title="Entre com o Imc" >
+          <div *ngIf="submitted && f.imc.errors" class="invalid-feedback">
+            <span *ngIf="f.imc.errors.required">Preencha o Imc do aluno</span>
+          </div>
         </div>
 
         <div class="form-group col-sm-3">
           <label for="name">Gordura</label>
-          <input type="text" class="form-control" maxlength="5" (keyup)="onKeyGordura($event)" [(ngModel)]='inputGordura'  formControlName="gordura" data-toggle="tooltip"
-          data-placement="right" title="Entre com a Gordura" >
-            <div class="alert alert-danger" *ngIf = "(Gordura.touched) && (Gordura.invalid)" style="margin-top: 5px;">
-              <span *ngIf="Gordura.errors.required">Gordura é obrigatório</span>
-                <span *ngIf = "Gordura.errors.minlength">MinLength Error</span>                   
-            </div>
+          <input type="text" class="form-control" maxlength="5" (keyup)="onKeyGordura($event)"
+          [(ngModel)]='inputGordura'  formControlName="gordura" data-toggle="tooltip" data-placement="right" 
+          [ngClass]="{ 'is-invalid': submitted && f.gordura.errors }"  title="Entre com a Gordura" >
+          <div *ngIf="submitted && f.gordura.errors" class="invalid-feedback">
+            <span *ngIf="f.gordura.errors.required">Preencha a Gordura do aluno</span>
+          </div>
         </div>
 
         <div class="form-group col-sm-3">
           <label for="name">Viceral</label>
-          <input type="text" class="form-control" maxlength="5" (keyup)="onKeyViceral($event)" [(ngModel)]='inputViceral'  formControlName="viceral" data-toggle="tooltip"
-          data-placement="right" title="Entre com a Viceral" >
-            <div class="alert alert-danger" *ngIf = "(Viceral.touched) && (Viceral.invalid)" style="margin-top: 5px;">
-              <span *ngIf="Viceral.errors.required">Viceral é obrigatório</span>
-                <span *ngIf = "Viceral.errors.minlength">MinLength Error</span>                   
-            </div>
+          <input type="text" class="form-control" maxlength="5" (keyup)="onKeyViceral($event)" 
+            [(ngModel)]='inputViceral'  formControlName="viceral" data-toggle="tooltip" data-placement="right" 
+            [ngClass]="{ 'is-invalid': submitted && f.viceral.errors }" title="Entre com a Viceral" >
+          <div *ngIf="submitted && f.viceral.errors" class="invalid-feedback">
+            <span *ngIf="f.viceral.errors.required">Preencha a Viceral do aluno</span>
+          </div>
         </div>
       </div>
       <div class="col-4">
         <div class="form-group col-sm-3">
           <label for="name">Musculo</label>
-          <input type="text" class="form-control"  maxlength="5" (keyup)="onKeyMusculo($event)" [(ngModel)]='inputMusculo'  formControlName="musculo" data-toggle="tooltip"
-          data-placement="right" title="Entre com o Musculo" >
-            <div class="alert alert-danger" *ngIf = "(Musculo.touched) && (Musculo.invalid)" style="margin-top: 5px;">
-              <span *ngIf="Musculo.errors.required">Musculo é obrigatório</span>
-                <span *ngIf = "Musculo.errors.minlength">MinLength Error</span>                   
-            </div>
+          <input type="text" class="form-control"  maxlength="5" (keyup)="onKeyMusculo($event)"
+            [(ngModel)]='inputMusculo'  formControlName="musculo" data-toggle="tooltip" data-placement="right" 
+            [ngClass]="{ 'is-invalid': submitted && f.musculo.errors }"  title="Entre com o Musculo" >
+          <div *ngIf="submitted && f.musculo.errors" class="invalid-feedback">
+            <span *ngIf="f.musculo.errors.required">Preencha o Musculo do aluno</span>
+          </div>
         </div>
 
         <div class="form-group col-sm-3">
           <label for="name">Calorias</label>
-          <input type="text" class="form-control" maxlength="4" (keyup)="onKeyCalorias($event)" [(ngModel)]='inputCalorias'  formControlName="calorias" data-toggle="tooltip"
-          data-placement="right" title="Entre com o Calorias" >
-            <div class="alert alert-danger" *ngIf = "(Calorias.touched) && (Calorias.invalid)" style="margin-top: 5px;">
-              <span *ngIf="Calorias.errors.required">Calorias é obrigatório</span>
-                <span *ngIf = "Calorias.errors.minlength">MinLength Error</span>                   
-            </div>
+          <input type="text" class="form-control" maxlength="4" (keyup)="onKeyCalorias($event)"
+           [(ngModel)]='inputCalorias'  formControlName="calorias" data-toggle="tooltip" data-placement="right" 
+           [ngClass]="{ 'is-invalid': submitted && f.calorias.errors }" title="Entre com o Calorias" >
+           <div *ngIf="submitted && f.calorias.errors" class="invalid-feedback">
+            <span *ngIf="f.calorias.errors.required">Preencha as Calorias do aluno</span>
+          </div>
         </div>
 
         <div class="form-group col-sm-3">
           <label for="name">Idade</label>
-          <input type="text" class="form-control" maxlength="2" (keyup)="onKeyIdade($event)" [(ngModel)]='inputIdade'  formControlName="idade" data-toggle="tooltip"
-          data-placement="right" title="Entre com o Idade" >
-            <div class="alert alert-danger" *ngIf = "(Idade.touched) && (Idade.invalid)" style="margin-top: 5px;">
-              <span *ngIf="Idade.errors.required">Idade é obrigatório</span>
-                <span *ngIf = "Idade.errors.minlength">MinLength Error</span>                   
+          <input type="text" class="form-control" maxlength="2" (keyup)="onKeyIdade($event)" 
+            [(ngModel)]='inputIdade'  formControlName="idade" data-toggle="tooltip" data-placement="right" 
+            [ngClass]="{ 'is-invalid': submitted && f.idade.errors }"  title="Entre com o Idade" >
+            <div *ngIf="submitted && f.idade.errors" class="invalid-feedback">
+              <span *ngIf="f.idade.errors.required">Preencha a Idade do aluno</span>
             </div>
         </div>
 
         <div class="form-group col-sm-6">
           <label for="name">Data</label>
-          <input type="date" class="form-control" formControlName="dataMedida" data-toggle="tooltip"
-          data-placement="right" title="Entre com a Data" >
-            <div class="alert alert-danger" *ngIf = "(DataMedida.touched) && (DataMedida.invalid)" style="margin-top: 5px;">
-              <span *ngIf="DataMedida.errors.required">DataMedida é obrigatório</span>
-                <span *ngIf = "DataMedida.errors.minlength">MinLength Error</span>                   
-            </div>
+          <input type="date" class="form-control" formControlName="dataMedida" data-toggle="tooltip" data-placement="right" 
+          [ngClass]="{ 'is-invalid': submitted && f.dataMedida.errors }" title="Entre com a Data" >
+          <div *ngIf="submitted && f.dataMedida.errors" class="invalid-feedback">
+            <span *ngIf="f.dataMedida.errors.required">Preencha a Data</span>
+          </div>
         </div>
         
 
@@ -108,7 +107,7 @@
 <div class="row">
 <div class="col-sm-4"></div>
 <div class="col-sm-4">
-    <div [hidden]="!submitted">
+    <div [hidden]="!sucessSubmitted">
       <h4 class="mb-sm-5 mt-3">Composicao add com sucesso!</h4>&nbsp;&nbsp;
       <button (click)="addComposicaoForm()" class='btn btn-primary'>Add mais Composicões</button>&nbsp;
       <button (click)="gotToListComposicao()" class='btn btn-danger'>Fechar</button>

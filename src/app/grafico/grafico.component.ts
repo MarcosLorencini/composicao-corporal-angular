@@ -127,21 +127,25 @@ export class GraficoComponent implements OnInit {
     let dadosTabelaGraficoDois = [];
     this.alunos = this.dataService.getAluno();
     this.id_aluno = this.alunos.aluno_id
+    let arrayTamanho;
 
 
 		this.composicoesservice.getComposicoesGerarGraficoUm(this.id_aluno)
     .subscribe(data => {
-          arrayRetorno.push(data);
-
+       arrayRetorno.push(data);
+       arrayTamanho = arrayRetorno[0][1].length;
+         console.log("arrayTamanho "+arrayTamanho);
               let j=0;
               let i = 0;
               let m = 0;
               arrayRetorno.forEach((value, index) => {
-                 while( value[j][i] !== undefined){
-                    for (i; i < value.length; i++) {
+                 //while( value[j][i]){
+                    for (i; i < arrayTamanho; i++) {
                         j=0;
                         for (j; j < value.length; j++) {
-
+                           console.log("i "+i);
+                           console.log("j "+j);
+                           console.log(" value[j][i] "+ value[j][i]);
                           if(value[j][i] == undefined){
                               break;
                           }
@@ -162,7 +166,7 @@ export class GraficoComponent implements OnInit {
                       }
                      
                       this.chartOptions1.subtitle.text = this.alunos.aluno_nome;
-                    }
+                  //  }
                    
            });
        
@@ -177,9 +181,12 @@ export class GraficoComponent implements OnInit {
           let j=0;
           let i = 0;
           let m = 0;
+          let cont = 0;
           arrayRetornoGraficoDois.forEach((value, index) => {
-            while( value[j][i] !== undefined){
-              for (i; i < value.length; i++) {
+            
+            // while( value[j][i]){
+                for (i; i < arrayTamanho; i++) {
+                  cont++;
                 j=0;
                 for (j; j < value.length; j++) {
                   if(value[j][i] == undefined){
@@ -203,10 +210,10 @@ export class GraficoComponent implements OnInit {
                     dadosTabelaGraficoDois = [];
               }
                   this.chartOptions2.subtitle.text = this.alunos.aluno_nome;
-            }
+            //}
+            console.log("cont "+cont) 
                               
           });
-           
           Highcharts.chart('container2', this.chartOptions2);   
       },
             error => console.log(error));

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ComposicoesService } from 'src/app/composicao.service';
 import { Composicao } from 'src/app/composicao';
-import {FormControl,FormGroup,Validators} from '@angular/forms';
+import {FormControl,FormGroup,Validators, FormBuilder} from '@angular/forms';
 import { Aluno } from 'src/app/aluno';
 import { DataService } from 'src/app/aluno-list/data.service';
 import { AlunoService } from 'src/app/aluno.service';
@@ -17,6 +17,9 @@ import { DatePipe } from '@angular/common';
 })
 export class AddComposicaoComponent implements OnInit {
 
+  constructor(private composicoesservice: ComposicoesService, private router: Router, 
+    private dataService: DataService, private formBuilder: FormBuilder) { }
+
   inputPeso: any;
   inputImc: any;
   inputGordura: any;
@@ -25,6 +28,7 @@ export class AddComposicaoComponent implements OnInit {
   inputCalorias: any;
   inputIdade: any;
   inputData: any;
+  sucessSubmitted = false;
   
   onKeyPeso(event: any) {
     this.inputPeso = this.inputPeso.replace(/\D/g,'')
@@ -89,7 +93,7 @@ export class AddComposicaoComponent implements OnInit {
     this.inputIdade = this.inputIdade.replace(/^(\d)/g,"$1")
    }
 
-  constructor(private composicoesservice: ComposicoesService, private router: Router, private dataService: DataService) { }
+  
 
   composicao : Composicao=new Composicao();
   submitted = false;
@@ -98,29 +102,36 @@ export class AddComposicaoComponent implements OnInit {
   composicoes: any;
   deleteMessage=false;
   isupdatedcomposicao = false;
-  // composicoesList :any;
+  composicoessaveform: FormGroup;
   
 
   ngOnInit() {
-    // this.isupdatedcomposicao=false;
-    this.submitted=false;
     this.alunos = this.dataService.getAluno();
     this.id_aluno = this.alunos.aluno_id
+
+    this.composicoessaveform= this.formBuilder.group({
+      peso: ['', Validators.required],
+      imc: ['', Validators.required],
+      gordura: ['', Validators.required],
+      viceral: ['', Validators.required],
+      musculo: ['', Validators.required],
+      calorias: ['', Validators.required],
+      idade: ['', Validators.required],
+      dataMedida: ['', Validators.required]
+    });
       
   }
 
-  composicoessaveform=new FormGroup({
-    peso:new FormControl( ),
-    imc:new FormControl(),
-    gordura:new FormControl(),
-    viceral:new FormControl(),
-    musculo:new FormControl(),
-    calorias:new FormControl(),
-    idade:new FormControl(),
-    dataMedida:new FormControl()
-  });
+  // convenience getter for easy access to form fields
+  get f() { return this.composicoessaveform.controls; }
 
+  
   saveComposicao(saveComposicao){
+    this.submitted = true;
+    if (this.composicoessaveform.invalid) {
+      return;
+    }
+    this.sucessSubmitted = true;
     this.composicao=new Composicao();   
     let pesoNumber: number = parseFloat(this.Peso.value);
     this.composicao.peso=pesoNumber;
@@ -146,8 +157,7 @@ export class AddComposicaoComponent implements OnInit {
 
     this.composicao.dataMedida= new DatePipe('en-US').transform(this.DataMedida.value, 'dd/MM/yyyy');
     
-    console.log(this.composicao.dataMedida);
-    this.submitted = true;
+   
     this.save();
   }
 
@@ -222,11 +232,10 @@ export class AddComposicaoComponent implements OnInit {
   }
 
   addComposicaoForm(){
+    this.sucessSubmitted = false;
     this.submitted=false;
     this.composicoessaveform.reset();
   }
-
- 
 
   changeisUpdate(){
   this.isupdatedcomposicao=false;
