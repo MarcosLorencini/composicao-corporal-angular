@@ -1,8 +1,6 @@
 import { Component,OnInit } from '@angular/core';
-import {Chart} from 'chart.js';
 import { ComposicoesService } from '../composicao.service';
 import { DataService } from '../aluno-list/data.service';
-import { Composicao } from '../composicao';
 import { Aluno } from '../aluno';
 import * as Highcharts from 'highcharts';
 
@@ -128,6 +126,7 @@ export class GraficoComponent implements OnInit {
     this.alunos = this.dataService.getAluno();
     this.id_aluno = this.alunos.aluno_id
     let arrayTamanho;
+    let arrayTamanhoGraficoDois;
 
 
 		this.composicoesservice.getComposicoesGerarGraficoUm(this.id_aluno)
@@ -139,13 +138,9 @@ export class GraficoComponent implements OnInit {
               let i = 0;
               let m = 0;
               arrayRetorno.forEach((value, index) => {
-                 //while( value[j][i]){
                     for (i; i < arrayTamanho; i++) {
                         j=0;
                         for (j; j < value.length; j++) {
-                           console.log("i "+i);
-                           console.log("j "+j);
-                           console.log(" value[j][i] "+ value[j][i]);
                           if(value[j][i] == undefined){
                               break;
                           }
@@ -166,7 +161,6 @@ export class GraficoComponent implements OnInit {
                       }
                      
                       this.chartOptions1.subtitle.text = this.alunos.aluno_nome;
-                  //  }
                    
            });
        
@@ -177,15 +171,15 @@ export class GraficoComponent implements OnInit {
         this.composicoesservice.getComposicoesGerarGraficoDois(this.id_aluno)
         .subscribe(data => {
           arrayRetornoGraficoDois.push(data);
+          arrayTamanhoGraficoDois = arrayRetornoGraficoDois[0][1].length;
+         
           
           let j=0;
           let i = 0;
           let m = 0;
           let cont = 0;
           arrayRetornoGraficoDois.forEach((value, index) => {
-            
-            // while( value[j][i]){
-                for (i; i < arrayTamanho; i++) {
+                for (i; i < arrayTamanhoGraficoDois; i++) {
                   cont++;
                 j=0;
                 for (j; j < value.length; j++) {
@@ -210,7 +204,6 @@ export class GraficoComponent implements OnInit {
                     dadosTabelaGraficoDois = [];
               }
                   this.chartOptions2.subtitle.text = this.alunos.aluno_nome;
-            //}
             console.log("cont "+cont) 
                               
           });
