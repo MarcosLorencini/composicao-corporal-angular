@@ -30,7 +30,7 @@
     "font-awesome": "^4.7.0",
     "highcharts": "^8.0.4",
     "highcharts-angular": "^2.4.0",
-    "jquery": "^3.4.0",
+    "jquery": "^3.5.0",
     "meteor-node-stubs": "^0.4.1",
     "ngx-mask": "^9.0.1",
     "rxjs": "~6.3.3",
